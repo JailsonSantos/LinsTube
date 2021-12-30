@@ -1,0 +1,187 @@
+# Criar o App
+- npx react-native init App
+
+# Instalação dos styeled-components
+- yarn add styled-components
+
+# Site para buscar por componentes react native e outros
+- https://js.coach/?collection=React+Native
+
+# Instalar o App no device
+- yarn android
+
+# Iniciar o Bunble do App
+- yarn start 
+
+# Configurar o Device via Wifi
+- Precione D, para entrar nas configurações e digite (192.168.1.106), obs: IP da rede WIFI
+
+# Sites para icones (https://callstack.github.io/react-native-paper/index.html)
+- yarn add react-native-paper
+- yarn add react-native-vector-icons
+
+## Importante para os icones funcionarem (configuração de arquivo Android)
+- Edit android/app/build.gradle e adiciona esse comando no topo do arquivo
+- apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+- rode novamente yarn android
+
+# Site para buscar icones para aplicacao
+- https://materialdesignicons.com/   
+
+# Component Select
+- yarn add react-native-material-dialog
+
+# Rotas (React Navigation  V - 6.x)
+- yarn add @react-navigation/native
+- yarn add react-native-screens react-native-safe-area-context
+- yarn add @react-navigation/native-stack
+
+# Material Bottom Tabs Navigator (V - 6.x)
+- yarn add @react-navigation/material-bottom-tabs react-native-paper react-native-vector-icons
+
+# Configurar as Splas e nome da aplicaçao
+- android/manifest.xml
+
+# Gerar o Icone, da Splash da aplicação
+- https://romannurik.github.io/AndroidAssetStudio/index.html
+
+# Site pra teste de api gratis
+- https://jsonplaceholder.typicode.com
+
+------------------------ FIM DO PROJETO ---------------------------
+
+
+-------------------- GERANDO APK E AAB DO APP ---------------------
+# Gerando o APK e AAB
+- Generating an upload key
+
+* Rode o comando abaixo na pasta do projeto ex: MeuApp
+keytool -genkeypair -v -storetype PKCS12 -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+
+- Preencher as seguintes informações:
+
+Enter your keystore password: password123
+Re-enter new password: password123
+What is your first and last name? [unknown]: Jailson Santos
+What is the name of your organizational unit? [unknown]: MorohSoftware
+What is the name of your organization? [unknown]: MorohSoftware
+What is the name of your city or Locality? [unknown]: Sao Luis
+What is the name of your State or Province? [unknown]: Maranhao
+What is the two-letter country code for this unit? [unknown]: 55
+
+As informações acima estão corretas? sim
+
+- CHAVE DE UPLOAD (my-upload-key.keystore), copie ela e cole no caminho abaixo: 
+- LinsTube\App\android\app
+
+______________________________________________________________________________________
+
+# Setting up Gradle variables​
+- Edite o arquivo (android/gradle.properties) e adicione as configurações abaixo
+MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore
+MYAPP_UPLOAD_KEY_ALIAS=my-key-alias
+MYAPP_UPLOAD_STORE_PASSWORD=*****
+MYAPP_UPLOAD_KEY_PASSWORD=*****
+
+______________________________________________________________________________________
+
+# Adicione as seguintes configurações no arquivo abaixo:
+- android/app/build.gradle
+...
+android {
+    ...
+    defaultConfig { ... }
+    signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        }
+    }
+    buildTypes {
+        release {
+            ...
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+______________________________________________________________________________________
+
+# Generating the release APK (para envio pra clientes e testes em outros dispositivos)
+- rode o seguinte comando dentro da pasta App/android
+gradlew assembleRelease 
+
+* o arquivo (app-release.apk), fica no caminho: 
+- LinsTube\App\android\app\build\outputs\apk\release 
+
+# IMPORTANTE
+- Esse comando roda aplicaçao de produção no seu Device.
+npx react-native run-android --variant=release
+
+______________________________________________________________________________________
+
+# Generating the release AAB (para playstore)
+- rode o seguinte comando dentro da pasta App/android
+gradlew bundleRelease 
+
+* o arquivo (app-release.aab), fica no caminho: 
+- LinsTube\App\android\app\build\outputs\bunble\release 
+
+
+------------------------LIBERANDO ACESSOA API DO YOUTUBE-----------------------------
+# CRIR UM PROJETO NO GOOGLE PLATFORM (LinsTube)
+- Ativar a API (youtube Data API V3)
+- Criar a credencial (AIzaSyDQTdzcLCB0nzjgWAjaH8nfLsp5rP22vNI)
+
+# Instalar o pacote do youtube
+- yarn add youtube-api-v3-search
+
+
+# Instalação do AXIOS
+- yarn add axios
+
+# Reactotron para debugar
+- yarn add reactotron-react-native
+- yarn add reactotron-redux
+- yarn add redux redux-saga
+- yarn add react-redux
+
+# Async storage
+- yarn add @react-native-async-storage/async-storage
+
+configuraçao
+
+cria uma pasta: e cole a configuração abaixo no arquivo:
+* src/config
+(ReactotronConfig.js)
+
+import Reactotron from 'reactotron-react-native'
+
+Reactotron
+  .setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `react-native` or `@react-native-community/async-storage` depending on where you get it from
+  .configure() // controls connection & communication settings
+  .useReactNative() // add all built-in react native plugins
+  .connect() // let's connect!
+
+
+# Instalação de dependencia do Youtube-Iframe
+- https://lonelycpp.github.io/react-native-youtube-iframe/
+- yarn add react-native-webview
+- yarn add react-native-youtube-iframe
+
+
+# Instalação do dotenv
+- yarn add react-native-dotenv
+
+Configurar o arquivo babel.config.js
+
+module.exports = {
+   presets: [
+      'module:metro-react-native-babel-preset',
+      'module:react-native-dotenv'
+   ]
+}

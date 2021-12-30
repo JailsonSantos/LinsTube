@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Mudar a cor da status bar na inicialização. -->
+    <item name="android:statusBarColor">@color/light</item>
+        <!-- Tema de fundo da aplicação é o splash. -->
+        <item name="android:windowBackground">
+        @drawable/splash
+        </item>
+    </style>
+
+</resources>
